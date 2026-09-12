@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akshat — Data Scientist / Data Analyst</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg-dark: #0D0E10;
+    --bg-loader: #1b1b1d;
+    --ink: #ECECE9;
+    --ink-dim: #8B8D93;
+    --line: #232427;
+    --accent: #5B8CFF;
+    --mono: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --serif: 'DM Serif Display', Georgia, serif;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    background: var(--bg-dark);
+    color: var(--ink);
+    font-family: var(--sans);
+    overflow-x: clip;
+  }
+
+  body {
+    background: var(--bg-dark);
+    color: var(--ink);
+    font-family: var(--sans);
+    overflow-x: clip;
+  }
+
+  /* Prevent body scrolling while loading screen is active */
+  body.is-loading {
+    overflow: hidden;
+  }
+
+  /* ========================================================
+     1. LOADER STYLES
+     ======================================================== */
+  #loader {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-loader);
+    z-index: 99999;
+    will-change: transform, opacity;
+    transition: transform 0.75s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.6s ease 0.15s;
+  }
+
+  #loader.done {
+    transform: translateY(-100%);
+    opacity: 0.001;
+    pointer-events: none;
+  }
+
+  .word-box {
+    position: relative;
+    width: min(90vw, 1100px);
+  }
+
+  #wordSvg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  #wordSvg text {
+    font-weight: 800;
+    letter-spacing: -2px;
+    user-select: none;
+  }
+
+  .pct {
+    position: absolute;
+    right: 2%;
+    bottom: -2.2em;
+    font-size: clamp(11px, 1.6vw, 16px);
+    color: #e9e9ea;
+    letter-spacing: 0.01em;
+    font-variant-numeric: tabular-nums;
+    font-weight: 400;
+    font-family: var(--sans);
+  }
+
+  /* ========================================================
+     2. HERO / LANDING SECTION
+     ======================================================== */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    background: #000;
+  }
+
+  .video-pane {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #000;
+  }
+
+  .video-pane video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #vid-base {
+    z-index: 1;
+  }
+
+  .video-pane::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    background:
+      linear-gradient(90deg, rgba(10, 10, 8, 0.25) 0%, rgba(10, 10, 8, 0.05) 30%, rgba(10, 10, 8, 0.4) 70%, rgba(10, 10, 8, 0.85) 100%),
+      linear-gradient(0deg, rgba(13, 14, 16, 1) 0%, rgba(13, 14, 16, 0.4) 15%, rgba(10, 10, 8, 0) 40%);
+    pointer-events: none;
+  }
+
+  .video-credit {
+    position: absolute;
+    left: 36px;
+    bottom: 32px;
+    z-index: 4;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: rgba(244, 240, 230, 0.65);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: floatCredit 2.5s ease-in-out infinite;
+  }
+
+  @keyframes floatCredit {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+  }
+
+  .info-pane {
+    position: absolute;
+    z-index: 5;
+    top: 50%;
+    right: 7%;
+    transform: translateY(-50%);
+    text-align: right;
+    pointer-events: none;
+  }
+
+  h1.name {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(64px, 8.5vw, 128px);
+    line-height: 0.92;
+    color: #faf7ef;
+    letter-spacing: -0.005em;
+    text-shadow: 0 2px 28px rgba(0, 0, 0, 0.45), 0 1px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .role {
+    margin-top: 18px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(19px, 1.8vw, 26px);
+    letter-spacing: 0.01em;
+    color: #e7ddc8;
+    text-shadow: 0 1px 16px rgba(0, 0, 0, 0.45);
+  }
+
+  /* ========================================================
+     4. CONTENT SECTION (INTERNSHIP & PROJECTS)
+     ======================================================== */
+  .content-section {
+    position: relative;
+    z-index: 10;
+    background: var(--bg-dark);
+    padding: 100px 24px 120px;
+  }
+
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-dim);
+    margin-bottom: 10px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  h2.section-heading {
+    font-size: clamp(32px, 5vw, 46px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 56px;
+    color: var(--ink);
+  }
+
+  /* ========================================================
+     3. DARK → WHITE TRANSITION
+     ======================================================== */
+  .dark-white-transition {
+    position: relative;
+    z-index: 9;
+    height: 35vh;
+    min-height: 35vh;
+    margin: 0;
+    background: #000;
+  }
+
+
+  /* ========================================================
+     TRANSITION TYPOGRAPHY — BEYOND THE POSSIBILITIES
+     ======================================================== */
+  .dark-white-transition {
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .transition-word {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    width: max-content;
+    white-space: nowrap;
+    font-family: inherit;
+    font-size: clamp(64px, 12vw, 190px);
+    line-height: .82;
+    font-weight: 900;
+    letter-spacing: -0.065em;
+    text-transform: uppercase;
+    color: #f4f7f6;
+    pointer-events: none;
+    will-change: transform, opacity, color;
+    transform: translate3d(115vw, -50%, 0);
+  }
+
+  .transition-word:nth-child(1) { top: 50%; }
+  .transition-word:nth-child(2) { top: 43%; font-size: clamp(54px, 10vw, 160px); }
+  .transition-word:nth-child(3) { top: 64%; font-size: clamp(52px, 9.5vw, 150px); }
+
+  @media (max-width: 700px) {
+    .transition-word {
+      font-size: clamp(48px, 16vw, 105px);
+      letter-spacing: -0.055em;
+    }
+    .transition-word:nth-child(1) { top: 24%; }
+    .transition-word:nth-child(2) { top: 45%; font-size: clamp(44px, 14vw, 90px); }
+    .transition-word:nth-child(3) { top: 65%; font-size: clamp(42px, 13vw, 84px); }
+  }
+
+  /* ========================================================
+     5. LINENGRASS SCROLL SECTION
+     ======================================================== */
+  .linengrass-section {
+    position: relative;
+    height: 460vh;
+    background: #000;
+    color: #111713;
+  }
+
+  .linengrass-section .sticky-stage {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100svh;
+    min-height: 620px;
+    overflow: hidden;
+    background: #000;
+    isolation: isolate;
+  }
+
+  .linengrass-section .ambient {
+    position: absolute;
+    inset: -15%;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 72% 48%, rgba(74, 166, 87, .075), transparent 28%),
+      radial-gradient(circle at 12% 78%, rgba(74, 166, 87, .035), transparent 24%);
+    opacity: 0;
+    transform: scale(1.04);
+    will-change: opacity, transform;
+  }
+
+  .linengrass-section .video-shell {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+    border-radius: 0;
+    transform-origin: left center;
+    will-change: transform, width, height, left, top, border-radius, box-shadow;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  }
+
+  .linengrass-section .video-shell video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    background: #000;
+    opacity: 1;
+    will-change: opacity;
+    transform: translateZ(0);
+  }
+
+  .linengrass-section .video-veil {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, rgba(255, 255, 255, .12), transparent 42%, rgba(255, 255, 255, .03)),
+      linear-gradient(0deg, rgba(255, 255, 255, .12), transparent 35%);
+    opacity: 0;
+    will-change: opacity;
+  }
+
+  .linengrass-section .content {
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    right: 0;
+    width: 49%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: clamp(42px, 7vw, 112px);
+    padding-left: clamp(32px, 6vw, 96px);
+    opacity: 0;
+    transform: translate3d(42px, 0, 0);
+    pointer-events: none;
+    will-change: opacity, transform;
+  }
+
+  .linengrass-section .content-inner {
+    width: min(560px, 100%);
+  }
+
+  .linengrass-section .eyebrow {
+    margin: 0 0 18px;
+    color: #32833f;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    font-family: var(--sans);
+  }
+
+  .linengrass-section h2.lg-title {
+    margin: 0;
+    color: #4aa657;
+    font-size: clamp(54px, 7.2vw, 112px);
+    line-height: .86;
+    letter-spacing: -.065em;
+    font-weight: 850;
+    font-family: var(--sans);
+  }
+
+  .linengrass-section .role {
+    margin: 25px 0 0;
+    font-size: clamp(19px, 1.65vw, 27px);
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -.025em;
+    font-family: var(--sans);
+    font-style: normal;
+    color: #A3CBA8;
+    text-shadow: none;
+  }
+
+  .linengrass-section .rule {
+    width: 52px;
+    height: 2px;
+    margin: 31px 0 27px;
+    background: #4aa657;
+    transform-origin: left center;
+    transform: scaleX(0);
+    will-change: transform;
+  }
+
+  .linengrass-section .details {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 19px;
+  }
+
+  .linengrass-section .details li {
+    display: grid;
+    grid-template-columns: 8px 1fr;
+    gap: 15px;
+    align-items: start;
+    color: #68716b;
+    font-size: clamp(15px, 1.15vw, 18px);
+    line-height: 1.55;
+    letter-spacing: -.012em;
+    padding-left: 0;
+  }
+
+  .linengrass-section .details li::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    margin-top: .65em;
+    border-radius: 50%;
+    background: #4aa657;
+    box-shadow: 0 0 0 5px rgba(74, 166, 87, .09);
+    position: static;
+  }
+
+  .linengrass-section .metric {
+    margin-top: 34px;
+    display: flex;
+    align-items: baseline;
+    gap: 11px;
+    color: #111713;
+  }
+
+  .linengrass-section .metric strong {
+    color: #4aa657;
+    font-size: clamp(30px, 3vw, 48px);
+    line-height: 1;
+    letter-spacing: -.05em;
+  }
+
+  .linengrass-section .metric span {
+    color: #68716b;
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  .linengrass-section .scroll-hint {
+    position: absolute;
+    z-index: 4;
+    left: 50%;
+    bottom: 28px;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(17, 23, 19, .48);
+    font-size: 11px;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    opacity: 1;
+    transition: opacity .3s ease;
+    pointer-events: none;
+    font-family: var(--sans);
+  }
+
+  .linengrass-section .scroll-hint i {
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: rgba(17, 23, 19, .28);
+  }
+
+  .linengrass-section .progress {
+    position: fixed;
+    z-index: 20;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 2px;
+    pointer-events: none;
+    background: rgba(74, 166, 87, .08);
+  }
+
+  .linengrass-section .progress span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform-origin: left center;
+    transform: scaleX(0);
+    background: #4aa657;
+    will-change: transform;
+  }
+
+  /* Responsive for Linengrass section */
+  @media (max-width: 760px) {
+    .linengrass-section {
+      height: 520vh;
+    }
+
+    .linengrass-section .sticky-stage {
+      min-height: 680px;
+    }
+
+    .linengrass-section .video-shell {
+      width: 100% !important;
+    }
+
+    .linengrass-section .content {
+      top: 54%;
+      right: 0;
+      width: 100%;
+      height: 46%;
+      align-items: flex-start;
+      padding: 26px 24px 34px;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, .0), rgba(255, 255, 255, .97) 22%);
+    }
+
+    .linengrass-section h2.lg-title {
+      font-size: clamp(48px, 15vw, 76px);
+    }
+
+    .linengrass-section .role {
+      margin-top: 15px;
+    }
+
+    .linengrass-section .rule {
+      margin: 20px 0 18px;
+    }
+
+    .linengrass-section .details {
+      gap: 11px;
+    }
+
+    .linengrass-section .details li {
+      font-size: 14px;
+      gap: 11px;
+    }
+
+    .linengrass-section .metric {
+      margin-top: 19px;
+    }
+
+    .linengrass-section .scroll-hint {
+      bottom: 14px;
+    }
+  }
+
+  /* ========================================================
+     PROJECTS — SCROLL WHEEL ONLY
+     ======================================================== */
+  #projects { position:relative; padding:0; background:#0D0E10; overflow:visible; }
+  #projects .projects-scroll-space { height:300vh; position:relative; }
+  #projects .projects-wheel-stage { position:sticky; top:0; width:100%; height:100vh; min-height:620px; display:block; overflow:hidden; background:#f3f3f1; }
+  #projects .projects-panel { position:relative; width:100%; height:100%; min-height:620px; background:#f3f3f1; color:#151515; overflow:hidden; }
+  #projects .projects-brand { position:absolute; left:30px; top:25px; z-index:8; font-size:12px; font-weight:800; letter-spacing:.08em; }
+  #projects .projects-close { position:absolute; right:28px; top:20px; z-index:8; font-size:28px; font-weight:200; line-height:1; color:#999; }
+
+  #projects .projects-wheel { position:absolute; width:720px; height:720px; left:-360px; top:50%; transform:translateY(-50%); border:1px solid #d7d7d4; border-radius:50%; z-index:2; }
+  #projects .wheel-dot { position:absolute; width:4px; height:4px; margin:-2px; border-radius:50%; background:#c5c5c2; }
+  #projects .wheel-number { position:absolute; left:50%; top:50%; width:72px; margin:0; font-family:var(--mono); font-size:30px; font-weight:700; letter-spacing:-.05em; color:#d2d2cf; text-align:center; transform-origin:center; transition:color .45s ease, filter .45s ease, opacity .45s ease, font-size .45s ease; will-change:transform,filter,opacity; }
+  #projects .wheel-number.active { color:#181818; filter:blur(0); opacity:1; font-size:32px; }
+  #projects .wheel-number:not(.active) { filter:blur(2px); }
+  #projects .wheel-center-dot { position:absolute; left:100%; top:50%; width:5px; height:5px; border-radius:50%; background:#222; transform:translate(-2px,-2px); }
+
+  /* Landscape thumbnail above the project information. */
+  #projects .projects-thumb { position:absolute; z-index:4; left:58%; top:12%; width:min(38vw,560px); height:auto; transform:translateX(-50%); overflow:hidden; background:transparent; }
+  #projects .projects-thumb img { width:100%; height:auto; display:block; object-fit:contain; background:transparent; filter:blur(0); transform:scale(1); transition:opacity .35s ease,filter .45s ease,transform .7s cubic-bezier(.22,1,.36,1); }
+  #projects .projects-thumb.switching img { opacity:.1; filter:blur(14px); transform:scale(1.05); }
+
+  #projects .projects-copy { position:absolute; z-index:5; left:58%; top:56%; width:min(38vw,560px); transform:translateX(-50%); transition:opacity .2s ease,filter .35s ease,transform .45s cubic-bezier(.22,1,.36,1); }
+  #projects .projects-copy.switching { opacity:.08; filter:blur(12px); transform:translateX(-50%) translateY(14px); }
+  #projects .projects-count { margin-bottom:12px; font-family:var(--mono); font-size:11px; color:#aaa; letter-spacing:.12em; }
+  #projects .projects-title { margin:0; max-width:100%; font-size:clamp(34px,3.8vw,60px); line-height:.95; letter-spacing:-.055em; font-weight:800; }
+  #projects .projects-subtitle { margin-top:14px; font-family:var(--mono); font-size:12px; color:#999; }
+  #projects .projects-description { margin:20px 0 0; max-width:700px; font-size:14px; line-height:1.5; color:#858585; }
+  #projects .projects-meta { margin-top:22px; }
+  #projects .projects-link { display:inline-flex; align-items:center; padding:11px 17px; background:#222; color:#fff; text-decoration:none; font-family:var(--mono); font-size:11px; border-radius:999px; transition:transform .2s ease,background .2s ease; }
+  #projects .projects-link:hover { transform:translateY(-2px); background:#000; }
+  #projects .projects-hint { position:absolute; z-index:8; left:30px; bottom:25px; font-family:var(--mono); font-size:9px; color:#aaa; letter-spacing:.04em; }
+  #projects .projects-progress { position:absolute; right:30px; bottom:25px; font-family:var(--mono); font-size:9px; color:#aaa; }
+
+  @media (max-width:900px) {
+    #projects .projects-wheel { width:600px; height:600px; left:-300px; }
+    #projects .projects-thumb,#projects .projects-copy { left:62%; width:42vw; }
+    #projects .projects-thumb { height:auto; }
+  }
+  @media (max-width:650px) {
+    #projects .projects-wheel { width:500px; height:500px; left:-250px; }
+    #projects .wheel-number { font-size:24px; }
+    #projects .projects-thumb,#projects .projects-copy { left:68%; width:56vw; }
+    #projects .projects-thumb { top:14%; height:auto; }
+    #projects .projects-copy { top:59%; }
+    #projects .projects-title { font-size:clamp(28px,7vw,44px); }
+    #projects .projects-description { font-size:12px; }
+  }
+
+  /* Responsive styling */
+  @media (max-width: 880px) {
+    .info-pane {
+      right: 6%;
+      left: 6%;
+      text-align: right;
+    }
+
+    h1.name {
+      font-size: clamp(48px, 13vw, 76px);
+    }
+  }
+
+  @media (max-width: 680px) {
+    .row-body {
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .thumb {
+      width: 100%;
+      flex-basis: 180px;
+      height: 180px;
+    }
+
+    .row-title {
+      font-size: 18px;
+    }
+
+
+    .row:hover .row-body,
+    .row.active .row-body {
+      max-height: 700px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #loader {
+      transition: opacity 0.4s ease;
+    }
+    * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+</style>
+</head>
+<body class="is-loading">
+
+<!-- 1. LOADING SCREEN -->
+<div id="loader">
+  <div class="word-box">
+    <svg id="wordSvg" viewBox="0 0 1000 260" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <defs>
+        <mask id="wave-mask" maskUnits="userSpaceOnUse">
+          <rect id="maskBg" x="0" y="0" width="1000" height="260" fill="black"/>
+          <path id="wavePath" fill="white" d=""></path>
+        </mask>
+      </defs>
+
+      <text id="baseText" x="500" y="185" text-anchor="middle"
+            font-size="220" fill="#55565a">Akshat</text>
+
+      <text id="fillText" x="500" y="185" text-anchor="middle"
+            font-size="220" fill="#ffffff" mask="url(#wave-mask)">Akshat</text>
+    </svg>
+
+    <span class="pct" id="pct">loading&hellip;&nbsp; 0%</span>
+  </div>
+</div>
+
+<!-- 2. HERO / LANDING PAGE -->
+<section class="hero" id="home">
+  <div class="video-pane" id="videoPane">
+    <video id="vid-base" autoplay muted loop playsinline preload="auto">
+      <source src="drown.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="video-credit">Scroll to explore &darr;</div>
+  </div>
+
+  <div class="info-pane">
+    <h1 class="name">Akshat</h1>
+    <div class="role">Data Scientist / Data Analyst</div>
+  </div>
+</section>
+
+<!-- 3. DARK → WHITE TRANSITION -->
+<section class="dark-white-transition" aria-hidden="true">
+  <div class="transition-word transition-main" data-start="0.00" data-end="1.00">BEYOND THE POSSIBILITIES!</div>
+</section>
+
+<!-- 4. MAIN CONTENT: INTERNSHIP & PROJECTS -->
+<!-- Linengrass Scroll Section (exact design from linengrass.html) -->
+<section class="linengrass-section" id="linengrass">
+  <div class="sticky-stage">
+    <div class="ambient" aria-hidden="true"></div>
+
+    <div class="video-shell" id="videoShell">
+      <video id="linengrassVideo" src="./linengrass.webm" preload="auto" muted playsinline webkit-playsinline
+        disablepictureinpicture aria-label="Linengrass internship animation">
+      </video>
+      <div class="video-veil"></div>
+    </div>
+
+    <section class="content" id="content" aria-label="Linengrass internship">
+      <div class="content-inner">
+        <p class="eyebrow">Internship &middot; Data &amp; Analytics</p>
+        <h2 class="lg-title">Linengrass</h2>
+        <p class="role">Data Analyst Intern</p>
+        <div class="rule"></div>
+
+        <ul class="details">
+          <li>Scraped hotel data — including names, addresses, amenities, and pricing — from multiple websites across
+            Bangalore.</li>
+          <li>Collected data for 2,200+ of approximately 2,400 hotels, building a broad source dataset for analysis.
+          </li>
+          <li>Cleaned the dataset by removing duplicates, fixing inconsistent entries, and filling missing values so
+            it could be used reliably for analysis and reporting.</li>
+        </ul>
+
+        <div class="metric">
+          <strong>2,200+</strong>
+          <span>hotels collected<br>across Bangalore</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="scroll-hint" id="scrollHint" aria-hidden="true">
+      <i></i> Scroll to explore <i></i>
+    </div>
+  </div>
+</section>
+
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+<main class="content-section" id="projects">
+  <div class="projects-scroll-space">
+    <div class="projects-wheel-stage">
+      <div class="projects-panel">
+        <div class="projects-brand">AKSHAT</div>
+        <div class="projects-close">×</div>
+
+        <div class="projects-wheel" aria-hidden="true">
+          <span class="wheel-dot" style="left:50%;top:0"></span>
+          <span class="wheel-dot" style="left:78%;top:6%"></span>
+          <span class="wheel-dot" style="left:95%;top:27%"></span>
+          <span class="wheel-dot" style="left:95%;top:73%"></span>
+          <span class="wheel-dot" style="left:78%;top:94%"></span>
+          <span class="wheel-dot" style="left:50%;top:100%"></span>
+          <span class="wheel-center-dot"></span>
+          <div class="wheel-number" data-index="0">01</div>
+          <div class="wheel-number" data-index="1">02</div>
+          <div class="wheel-number" data-index="2">03</div>
+          <div class="wheel-number" data-index="3">04</div>
+          <div class="wheel-number" data-index="4">05</div>
+        </div>
+
+        <div class="projects-thumb" id="projectsThumb">
+          <img id="projectsThumbImage" src="metal.png" alt="Metal Defect Detection preview">
+        </div>
+
+        <div class="projects-copy">
+          <div class="projects-copy-inner" id="projectsCopy">
+            <div class="projects-count" id="projectsCount">01 / 05</div>
+            <h2 class="projects-title" id="projectsTitle">Metal Defect Detection</h2>
+            <div class="projects-subtitle" id="projectsSubtitle">Classical Computer Vision + ML</div>
+            <p class="projects-description" id="projectsDescription">CPU-based computer vision system to classify and localize metal surface defects using handcrafted image features and SVM, achieving 94.1% test accuracy.</p>
+            <div class="projects-meta">
+              <a class="projects-link" id="projectsLink" href="https://github.com/Akki-Maharaj/Metal-Defect-Detection" target="_blank" rel="noopener">View Project ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="projects-hint">SCROLL TO EXPLORE</div>
+        <div class="projects-progress" id="projectsProgress">01 — 05</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- 4. SCRIPTS (Linengrass scroll scene, Wave loader animation & interactive controls) -->
+<script id="linengrass-script">
+(() => {
+  const section = document.getElementById('linengrass');
+  const shell = document.getElementById('videoShell');
+  const video = document.getElementById('linengrassVideo');
+  const content = document.getElementById('content');
+  const ambient = section ? section.querySelector('.ambient') : null;
+  const veil = section ? section.querySelector('.video-veil') : null;
+  const rule = section ? section.querySelector('.rule') : null;
+  const hint = document.getElementById('scrollHint');
+  const progressBar = document.getElementById('progressBar');
+
+  if (!section || !shell || !video || !content) return;
+
+  let targetProgress = 0;
+  let smoothProgress = 0;
+  let duration = 0;
+  let metadataReady = false;
+  let seeking = false;
+  let pendingTime = null;
+  let lastRequestedTime = -1;
+  let lastSeekAt = 0;
+
+  const clamp = (n, a = 0, b = 1) => Math.min(b, Math.max(a, n));
+  const ease = t => t * t * (3 - 2 * t);
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
+  const map = (v, a, b) => clamp((v - a) / (b - a));
+
+  function sectionProgress() {
+    const rect = section.getBoundingClientRect();
+    const travel = section.offsetHeight - window.innerHeight;
+    if (travel <= 0) return 0;
+    // Start playback early as the top of the section enters the viewport
+    const leadIn = window.innerHeight * 0.5;
+    return clamp((leadIn - rect.top) / (travel + leadIn));
+  }
+
+  function updateTarget() {
+    targetProgress = sectionProgress();
+    if (progressBar) {
+      progressBar.style.transform = `scaleX(${targetProgress})`;
+    }
+  }
+
+  function requestVideoSeek(progress, now) {
+    if (!metadataReady || !duration) return;
+
+    const time = clamp(progress / 0.78) * duration;
+
+    if (Math.abs(time - lastRequestedTime) < 1 / 36) return;
+    if (now - lastSeekAt < 30) {
+      pendingTime = time;
+      return;
+    }
+
+    pendingTime = time;
+    flushSeek(now);
+  }
+
+  function flushSeek(now = performance.now()) {
+    if (seeking || pendingTime == null || !metadataReady) return;
+    if (now - lastSeekAt < 30) return;
+
+    const time = pendingTime;
+    pendingTime = null;
+    lastRequestedTime = time;
+    lastSeekAt = now;
+    seeking = true;
+    video.currentTime = time;
+  }
+
+  video.addEventListener('seeked', () => {
+    seeking = false;
+    flushSeek();
+  }, { passive: true });
+
+  video.addEventListener('loadedmetadata', () => {
+    metadataReady = true;
+    duration = video.duration;
+    if (!Number.isFinite(duration) || duration <= 0) {
+      duration = 1;
+    }
+    video.currentTime = 0;
+    video.classList.add('ready');
+  }, { once: true });
+
+  video.addEventListener('error', () => {
+    shell.style.background = '#f7f8f7';
+  });
+
+  function render(now) {
+    smoothProgress += (targetProgress - smoothProgress) * 0.105;
+    if (Math.abs(targetProgress - smoothProgress) < 0.0005) smoothProgress = targetProgress;
+
+    const p = smoothProgress;
+
+    video.style.opacity = map(p, 0, 0.02);
+
+    if (ambient) {
+      ambient.style.opacity = 0.15 * ease(map(p, 0.02, 0.25));
+      ambient.style.transform = `scale(${1.04 - 0.04 * p})`;
+    }
+
+    const transformP = easeOut(map(p, 0.34, 0.62));
+
+    if (window.innerWidth > 760) {
+      shell.style.width = `${100 - 51 * transformP}%`;
+      shell.style.height = `${100 - 20 * transformP}%`;
+      shell.style.left = `${2.5 * transformP}%`;
+      shell.style.top = `${10 * transformP}%`;
+      shell.style.borderRadius = `${28 * transformP}px`;
+      shell.style.boxShadow = transformP > 0.02
+        ? `0 24px 70px rgba(17,23,19,${0.10 * transformP})`
+        : 'none';
+    } else {
+      shell.style.width = '100%';
+      shell.style.height = '58%';
+      shell.style.left = '0';
+      shell.style.top = '0';
+      shell.style.borderRadius = '0';
+      shell.style.boxShadow = 'none';
+    }
+
+    const copyP = easeOut(map(p, 0.47, 0.68));
+    content.style.opacity = copyP;
+    content.style.transform = `translate3d(${42 - 42 * copyP}px,0,0)`;
+    if (rule) {
+      rule.style.transform = `scaleX(${ease(map(p, 0.54, 0.72))})`;
+    }
+    if (veil) {
+      veil.style.opacity = 0.16 * transformP;
+    }
+    if (hint) {
+      hint.style.opacity = p > 0.08 ? 0 : 1;
+    }
+
+    requestVideoSeek(p, now);
+    flushSeek(now);
+    requestAnimationFrame(render);
+  }
+
+  window.addEventListener('scroll', updateTarget, { passive: true });
+  window.addEventListener('resize', updateTarget, { passive: true });
+  updateTarget();
+  requestAnimationFrame(render);
+})();
+</script>
+
+<script>
+(function(){
+  "use strict";
+
+  // --- Loader Logic ---
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var wavePath = document.getElementById("wavePath");
+  var baseText = document.getElementById("baseText");
+  var pctEl = document.getElementById("pct");
+  var loader = document.getElementById("loader");
+
+  var DURATION = 3200;
+  var start = null;
+  var lastFrameTime = 0;
+  var FRAME_INTERVAL = 1000 / 30;
+
+  var SAMPLES = 25;
+  var top = 40, bottom = 220, left = -100, right = 1100;
+
+  function measure(){
+    try{
+      var bb = baseText.getBBox();
+      var pad = bb.height * 0.15;
+      top = bb.y - pad;
+      bottom = bb.y + bb.height + pad;
+      left = bb.x - bb.width * 0.1;
+      right = bb.x + bb.width * 1.1;
+    }catch(e){ /* fallback to defaults */ }
+  }
+
+  function buildPath(fillFrac, phase, amplitude){
+    var span = bottom - top;
+    var topOvershoot = span * 0.08;
+    var bottomOvershoot = span * 0.15;
+    var travel = span + topOvershoot + bottomOvershoot;
+    var baseY = (bottom + bottomOvershoot) - fillFrac * travel;
+
+    var amp1 = amplitude * span;
+    var amp2 = amp1 * 0.45;
+
+    function waveY(frac){
+      return baseY
+        + amp1 * Math.sin(frac * 6.28318 + phase)
+        + amp2 * Math.sin(frac * 12.56636 - phase * 1.6);
+    }
+
+    var d = "M " + left.toFixed(1) + "," + waveY(0).toFixed(1);
+    for (var i = 1; i < SAMPLES; i++){
+      var frac = i / (SAMPLES - 1);
+      var x = left + (right - left) * frac;
+      d += " L " + x.toFixed(1) + "," + waveY(frac).toFixed(1);
+    }
+    d += " L " + right.toFixed(1) + "," + (bottom + span).toFixed(1);
+    d += " L " + left.toFixed(1) + "," + (bottom + span).toFixed(1);
+    d += " Z";
+    return d;
+  }
+
+  function finish(){
+    pctEl.textContent = "loading\u2026\u00A0\u00A0100%";
+    wavePath.setAttribute("d", buildPath(1, 0, 0));
+    setTimeout(function(){
+      loader.classList.add("done");
+      document.body.classList.remove("is-loading");
+      setTimeout(function(){ 
+        loader.style.display = "none"; 
+      }, 800);
+    }, 250);
+  }
+
+  function runReduced(){
+    var t0 = null;
+    function stepReduced(ts){
+      if (t0 === null) t0 = ts;
+      var t = Math.min(1, (ts - t0) / DURATION);
+      var progress = Math.floor(t * 100);
+      pctEl.textContent = "loading\u2026\u00A0\u00A0" + progress + "%";
+      wavePath.setAttribute("d", buildPath(progress / 100, 0, 0));
+      if (t < 1) requestAnimationFrame(stepReduced); else finish();
+    }
+    requestAnimationFrame(stepReduced);
+  }
+
+  function run(){
+    function step(ts){
+      if (start === null) start = ts;
+      if (ts - lastFrameTime < FRAME_INTERVAL){
+        requestAnimationFrame(step);
+        return;
+      }
+      lastFrameTime = ts;
+
+      var elapsed = ts - start;
+      var t = Math.min(1, elapsed / DURATION);
+      var progress = Math.floor(t * 100);
+
+      pctEl.textContent = "loading\u2026\u00A0\u00A0" + progress + "%";
+
+      var fillFrac = t;
+      var amplitude = 0.11 * (1 - t * 0.5);
+      var phase = elapsed * 0.0038;
+
+      wavePath.setAttribute("d", buildPath(fillFrac, phase, amplitude));
+
+      if (t < 1){
+        requestAnimationFrame(step);
+      } else {
+        finish();
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  function start_(){
+    measure();
+    wavePath.setAttribute("d", buildPath(0, 0, 0));
+    if (reduceMotion) runReduced(); else run();
+  }
+
+  if (document.fonts && document.fonts.ready){
+    document.fonts.ready.then(start_).catch(start_);
+  } else {
+    setTimeout(start_, 50);
+  }
+
+  // --- Project row toggle support for click/touch accessibility ---
+  var rows = document.querySelectorAll(".row");
+
+  // Keep the project under the cursor active even when the cursor itself
+  // has not moved. Scrolling can change which row is beneath a stationary
+  // pointer without firing mouseenter/mouseover again.
+  var lastPointerX = null;
+  var lastPointerY = null;
+  var activeRow = null;
+
+  function updateProjectHover(x, y) {
+    if (x == null || y == null) return;
+    var el = document.elementFromPoint(x, y);
+    var row = el ? el.closest(".row") : null;
+
+    if (row !== activeRow) {
+      rows.forEach(function(r){ r.classList.remove("active"); });
+      if (row) row.classList.add("active");
+      activeRow = row;
+    }
+  }
+
+  document.addEventListener("pointermove", function(e) {
+    lastPointerX = e.clientX;
+    lastPointerY = e.clientY;
+    updateProjectHover(lastPointerX, lastPointerY);
+  }, { passive: true });
+
+  // Re-check after every scroll frame so the stationary cursor behaves
+  // exactly like a hover cursor while the page moves underneath it.
+  var hoverCheckQueued = false;
+  function checkProjectHoverAfterScroll() {
+    if (hoverCheckQueued) return;
+    hoverCheckQueued = true;
+    requestAnimationFrame(function() {
+      hoverCheckQueued = false;
+      updateProjectHover(lastPointerX, lastPointerY);
+    });
+  }
+
+  window.addEventListener("scroll", checkProjectHoverAfterScroll, { passive: true });
+  window.addEventListener("resize", checkProjectHoverAfterScroll, { passive: true });
+
+  rows.forEach(function(row){
+    row.addEventListener("click", function(e){
+      if (e.target.closest("a")) return;
+      var wasActive = row.classList.contains("active");
+      rows.forEach(function(r){ r.classList.remove("active"); });
+      if (!wasActive) {
+        row.classList.add("active");
+        activeRow = row;
+      } else {
+        activeRow = null;
+      }
+    });
+  });
+
+})();
+
+
+  // Dark → white transition typography
+  (() => {
+    const section = document.querySelector('.dark-white-transition');
+    const words = section ? [...section.querySelectorAll('.transition-word')] : [];
+    if (!section || !words.length) return;
+
+    let target = 0;
+    let current = 0;
+    let raf = null;
+
+    const clamp01 = v => Math.max(0, Math.min(1, v));
+    const ease = v => v * v * (3 - 2 * v);
+    const lerp = (a, b, t) => a + (b - a) * t;
+
+    function render() {
+      current += (target - current) * 0.05;
+
+      words.forEach((word, i) => {
+        const start = parseFloat(word.dataset.start || '0');
+        const end = parseFloat(word.dataset.end || '1');
+        const local = clamp01((current - start) / (end - start));
+        const e = ease(local);
+
+        // Gentler travel distance so the word doesn't zoom past too quickly
+        const x = lerp(85, -95, e);
+
+        // Soft entrance/exit keeps the typography cinematic.
+        const fadeIn = clamp01(local / 0.18);
+        const fadeOut = clamp01((1 - local) / 0.18);
+        const opacity = ease(Math.min(fadeIn, fadeOut));
+
+        word.style.transform = `translate3d(${x}vw, -50%, 0)`;
+        word.style.opacity = opacity.toFixed(3);
+        word.style.color = '#f4f7f6';
+      });
+
+      raf = requestAnimationFrame(render);
+    }
+
+    function updateProgress() {
+      const rect = section.getBoundingClientRect();
+      // Start the animation as soon as the transition enters the viewport.
+      // This makes the text appear early without making it move faster.
+      const travel = rect.height + window.innerHeight;
+      target = clamp01((window.innerHeight - rect.top) / travel);
+    }
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress);
+    updateProgress();
+    render();
+  })();
+</script>
+
+
+<script id="projects-wheel-script">
+(() => {
+  const section = document.getElementById('projects');
+  const space = section?.querySelector('.projects-scroll-space');
+  const wheel = section?.querySelector('.projects-wheel');
+  const numbers = [...(section?.querySelectorAll('.wheel-number') || [])];
+  const copy = document.getElementById('projectsCopy');
+  const thumb = document.getElementById('projectsThumb');
+  const thumbImage = document.getElementById('projectsThumbImage');
+  const count = document.getElementById('projectsCount');
+  const title = document.getElementById('projectsTitle');
+  const subtitle = document.getElementById('projectsSubtitle');
+  const description = document.getElementById('projectsDescription');
+  const link = document.getElementById('projectsLink');
+  const progress = document.getElementById('projectsProgress');
+
+  if (!section || !space || !wheel || !numbers.length || !copy) return;
+
+  const projects = [
+    {
+      title: 'Metal Defect Detection',
+      subtitle: 'Classical Computer Vision + ML',
+      description: 'CPU-based computer vision system to classify and localize metal surface defects using handcrafted image features and SVM, achieving 94.1% test accuracy.',
+      image: 'metal.png',
+      link: 'https://github.com/Akki-Maharaj/Metal-Defect-Detection'
+    },
+    {
+      title: 'Genshin RAG Assistant',
+      subtitle: 'Local RAG + LLM + Damage Calculator',
+      description: 'Fully local Genshin assistant combining RAG for game knowledge with a formula-based damage calculator for accurate numeric answers, with no LLM-hallucinated numbers.',
+      image: 'genshin.png',
+      link: 'https://github.com/Akki-Maharaj/Genshin-RAG-Assistant'
+    },
+    {
+      title: 'Fake Job Detection',
+      subtitle: 'NLP + Fine-Tuned DistilBERT',
+      description: 'Fine-tuned DistilBERT classifier to detect fraudulent job postings on an imbalanced dataset of 17,880 postings, achieving 99% accuracy and 0.989 AUC-ROC.',
+      image: 'job.png',
+      link: 'https://github.com/Akki-Maharaj/Fake-Job-Detection'
+    },
+    {
+      title: 'Hospital Dashboard',
+      subtitle: 'Power BI · DAX · Power Query',
+      description: 'Interactive 6-page hospital analytics dashboard covering patients, doctors, operations, inventory and finance — surfacing peak-hour staffing, stock and billing trends.',
+      image: 'Hospital.png',
+      link: ''
+    },
+    {
+      title: 'Tableau HR Dashboard',
+      subtitle: 'Tableau · Python · Pandas',
+      description: 'Interactive HR analytics dashboard for workforce demographics, hiring and termination trends, salary and performance comparisons, with drill-down filtering.',
+      image: 'HR.png',
+      link: ''
+    }
+  ];
+
+  let active = 0;
+  let rendered = -1;
+  let switchingTimer = null;
+  let ticking = false;
+
+  // The wheel is an actual circular orbit.  We animate the ANGLE rather than
+  // interpolating x/y coordinates, so numbers travel around the arc instead
+  // of taking a straight chord across the circle.
+  let orbitAngle = 0;
+  let orbitFrom = 0;
+  let orbitTo = 0;
+  let orbitStart = 0;
+  let orbitFrame = null;
+  const orbitDuration = 520;
+
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const ease = t => t * t * (3 - 2 * t);
+
+  function shortestAngleDelta(from, to) {
+    let d = to - from;
+    while (d > 180) d -= 360;
+    while (d < -180) d += 360;
+    return d;
+  }
+
+  function paintOrbit() {
+    const radius = Math.min(315, wheel.clientWidth * 0.4375);
+    numbers.forEach((n, i) => {
+      const rad = (i * 72 + orbitAngle) * Math.PI / 180;
+      const x = Math.cos(rad) * radius;
+      const y = Math.sin(rad) * radius;
+      n.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px)`;
+    });
+  }
+
+  function animateOrbit(targetAngle) {
+    orbitFrom = orbitAngle;
+    orbitTo = orbitAngle + shortestAngleDelta(orbitAngle, targetAngle);
+    orbitStart = performance.now();
+    cancelAnimationFrame(orbitFrame);
+
+    const step = now => {
+      const t = clamp((now - orbitStart) / orbitDuration, 0, 1);
+      orbitAngle = orbitFrom + (orbitTo - orbitFrom) * ease(t);
+      paintOrbit();
+      if (t < 1) {
+        orbitFrame = requestAnimationFrame(step);
+      } else {
+        orbitAngle = targetAngle;
+        paintOrbit();
+      }
+    };
+    orbitFrame = requestAnimationFrame(step);
+  }
+
+  function setProject(index, animate = true) {
+    index = clamp(index, 0, projects.length - 1);
+    if (index === rendered && animate) return;
+    active = index;
+
+    numbers.forEach((n, i) => n.classList.toggle('active', i === active));
+
+    if (animate && rendered !== -1) {
+      copy.classList.add('switching');
+      if (thumb) thumb.classList.add('switching');
+      clearTimeout(switchingTimer);
+      switchingTimer = setTimeout(() => {
+        fillCopy(index);
+        copy.classList.remove('switching');
+        if (thumb) requestAnimationFrame(() => thumb.classList.remove('switching'));
+      }, 190);
+    } else {
+      fillCopy(index);
+      copy.classList.remove('switching');
+      if (thumb) thumb.classList.remove('switching');
+    }
+    rendered = index;
+  }
+
+  function fillCopy(index) {
+    const p = projects[index];
+    count.textContent = `${String(index + 1).padStart(2,'0')} / 05`;
+    title.textContent = p.title;
+    subtitle.textContent = p.subtitle;
+    description.textContent = p.description;
+    if (thumbImage) {
+      thumbImage.alt = `${p.title} preview`;
+      thumbImage.src = p.image;
+    }
+    progress.textContent = `${String(index + 1).padStart(2,'0')} — 05`;
+    if (p.link) {
+      link.href = p.link;
+      link.textContent = 'View Project ↗';
+      link.style.display = 'inline-flex';
+    } else {
+      link.removeAttribute('href');
+      link.textContent = 'Case Study Soon';
+      link.style.display = 'inline-flex';
+    }
+  }
+
+  function render() {
+    ticking = false;
+    const rect = space.getBoundingClientRect();
+    const maxScroll = Math.max(1, space.offsetHeight - window.innerHeight);
+    const p = clamp(-rect.top / maxScroll, 0, 1);
+    const continuous = p * (projects.length - 1);
+
+    // Keep the numbers locked to whole project positions. The page scrolls
+    // normally, and when the image changes the new active number is placed
+    // directly on the center marker instead of stopping between numbers.
+    const index = Math.round(continuous);
+    const displayPosition = index;
+
+    // Keep the rail fixed. The numbers are rotated by angle around the
+    // circumference, so every transition follows the round path.
+    wheel.style.transform = 'translateY(-50%)';
+    const targetAngle = -index * 72;
+    if (index !== active) {
+      setProject(index, true);
+      animateOrbit(targetAngle);
+    } else if (!orbitFrame && Math.abs(orbitAngle - targetAngle) > 0.01) {
+      orbitAngle = targetAngle;
+      paintOrbit();
+    }
+
+    numbers.forEach((n, i) => {
+      const distance = Math.abs(i - index);
+      const wrapped = Math.min(distance, projects.length - distance);
+      const blur = Math.min(5, wrapped * 1.7);
+      const opacity = clamp(1 - wrapped * .25, .22, 1);
+      n.style.filter = i === index ? 'blur(0)' : `blur(${blur}px)`;
+      n.style.opacity = opacity.toFixed(2);
+    });
+  }
+
+  function onScroll() {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(() => {
+        const rect = space.getBoundingClientRect();
+        const maxScroll = Math.max(1, space.offsetHeight - window.innerHeight);
+        const p = clamp(-rect.top / maxScroll, 0, 1);
+        render();
+      });
+    }
+  }
+
+  // The section itself provides the scroll distance. The sticky stage freezes
+  // the visual background while the wheel advances through the five projects.
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+
+  numbers.forEach((n, i) => {
+    n.addEventListener('click', () => {
+      const maxScroll = space.offsetHeight - window.innerHeight;
+      const target = (i / (projects.length - 1)) * maxScroll;
+      window.scrollTo({ top: section.offsetTop + target, behavior: 'smooth' });
+    });
+  });
+
+  orbitAngle = 0;
+  paintOrbit();
+  setProject(0, false);
+  render();
+})();
+</script>
+</body>
+</html>
